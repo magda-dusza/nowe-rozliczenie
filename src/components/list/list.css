@@ -1,0 +1,35 @@
+.list-headers{
+    display:flex;
+    padding:0.5rem 0.5rem;
+}
+
+.list-bank {
+    width:10%;
+}
+
+.list-date {
+    width:10%;
+}
+
+.list-amount {
+    width:10%;
+}
+
+.list-description {
+    width:30%;
+}
+
+.list-category {
+    width:20%;
+}
+
+.list-actions {
+    width:20%;
+}
+
+.table-row {
+    
+    border: 1px solid silver;
+}
+
+
