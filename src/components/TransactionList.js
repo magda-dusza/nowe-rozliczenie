@@ -38,10 +38,10 @@ export class TransactionList extends React.Component {
     changeList() {
         let categoriesCopy = {...this.state.categories};
         this.state.transactions.forEach((action)=>{
-            if(categoriesCopy[action.category]){
-                categoriesCopy[action.category] = categoriesCopy[action.category].concat([action]);
+            if(categoriesCopy[action.userCategory]){
+                categoriesCopy[action.userCategory] = categoriesCopy[action.userCategory].concat([action]);
             } else {
-                const newCategory = Object.assign({}, {[action.category] : [action]});
+                const newCategory = Object.assign({}, {[action.userCategory] : [action]});
                 categoriesCopy = Object.assign(categoriesCopy, newCategory);
             }
         });

@@ -30,7 +30,7 @@ export class Row extends React.Component {
         });
     }
     handleChange(event) {
-        this.setState({model : {...this.state.model , category: event.target.value}});
+        this.setState({model : {...this.state.model , userCategory: event.target.value}});
     }
     getDateCell() {
         let dateFormatted = new Date(this.state.model.date).toLocaleDateString();
@@ -54,7 +54,7 @@ export class Row extends React.Component {
                 {this.getDateCell()}
                 <div className="list-amount">{this.state.model.amount}</div>
                 <div className="list-description">{this.state.model.description}</div>
-                <div className="list-category">{this.onClickChangeCell(this.state.model.category)}</div>
+                <div className="list-category">{this.onClickChangeCell(this.state.model.userCategory)}</div>
                 <div className="list-actions"><button onClick={this.props.toggleRaw}>Szczegóły</button></div>
             </div>
         );
