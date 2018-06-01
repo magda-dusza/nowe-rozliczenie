@@ -11,7 +11,6 @@ export class Transaction extends React.Component {
         this.setState({isRawVisible: newValue});
     }
     render(){
-        console.log(this.props.transaction.raw);
         return (
             <div>
                 <Row toggleRaw={this.toggleRaw} transaction={this.props.transaction}/>

@@ -79,10 +79,14 @@ export class TransactionList extends React.Component {
         const processedData = processor(file, this.state.categoriesConfig);
         this.update(processedData);
     }
+    updateLists = ()=>{
+        this.setState({categories : {}});
+        this.fetchData();
+    }
     render(){
         return (
             <div>
-                <ActionBar fileLoaded={this.fileLoaded}/>
+                <ActionBar fileLoaded={this.fileLoaded} updateLists={this.updateLists}/>
                 <TransactionTable transactions={this.state.transactions} categories={this.state.categories}/>
             </div>
         );

@@ -22,7 +22,7 @@ export class ActionBar extends React.Component {
         return (
             <div>
                 <input className="btn btn-secondary top-bar" multiple id="file-upload" type="file" onChange={this.fileChanged}/>
-                <button>Aktualizuj</button>
+                <button onClick={this.props.updateLists}>Aktualizuj</button>
                 <button>Export</button>
             </div>
         );
