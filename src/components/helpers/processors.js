@@ -1,4 +1,6 @@
-export function processIng (file){
+import { setCategory } from './setCategory';
+
+export function processIng (file, categories){
     let lines = file.split("\n");
     let index = 0;
     let length = lines.length;
@@ -38,7 +40,7 @@ export function processIng (file){
             action.description = "Nie znaleziono";
         }
 
-        action.category = "Pozostale";
+        action.category = setCategory(action.description, categories).name;
         action.raw = raw;
 
         result.push(action);
@@ -47,7 +49,7 @@ export function processIng (file){
     return result;
 }
 
-export function processMillenium (file){
+export function processMillenium (file, categories){
     const lines = file.split("\n");
     const headers = lines[0].split(",");
 
@@ -79,7 +81,7 @@ export function processMillenium (file){
             action.description = columns[3];
         }
 
-        action.category = "Pozostale";
+        action.category = setCategory(action.description, categories).name;
         action.raw = raw;
 
         result.push(action);
