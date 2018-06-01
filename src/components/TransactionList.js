@@ -7,18 +7,33 @@ import {processMillenium, processIng} from './helpers/processors';
 export class TransactionList extends React.Component {
     state = {
         transactions: [],
-        categories: {}
+        categories: {},
+        categoriesConfig: []
     }
     componentDidMount(){
+       this.fetchData();
+       this.fetchCategoriesConfig();
+    }
+    fetchData() {
         fetch("http://localhost:3000/actions")
-            .then((result)=>result.json())
-            .then(resultJSON=>{
-                this.setState({transactions : resultJSON});
-                this.changeList();
-            })
-            .catch((err)=>{
-                console.log(err);
-            });
+        .then((result)=>result.json())
+        .then(resultJSON=>{
+            this.setState({transactions : resultJSON});
+            this.changeList();
+        })
+        .catch((err)=>{
+            console.log(err);
+        });
+    }
+    fetchCategoriesConfig(){
+        fetch("http://localhost:3000/categories")
+        .then((result)=>result.json())
+        .then(resultJSON=>{
+            this.setState({categoriesConfig : resultJSON});
+        })
+        .catch((err)=>{
+            console.log(err);
+        });
     }
     changeList() {
         let categoriesCopy = {...this.state.categories};
@@ -35,34 +50,33 @@ export class TransactionList extends React.Component {
     update = (data)=>{
         data.forEach((elem)=>{
             const unique = {date: elem.date, description: elem.description, amount: elem.amount}
-            console.log("unique", unique)
-            fetch("http://localhost:3000/actions", {method: 'post',    headers: {
-                'Accept': 'application/json',
-    'Content-Type': 'application/json'
-              },body: JSON.stringify(unique)})
+            fetch("http://localhost:3000/actions", 
+            {
+                method: 'post',    
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(unique)})
             .then((result)=>result.json())
             .then((resultJSON)=>{
-                console.log(resultJSON);
-                if(resultJSON.length>0){
-                    fetch("http://localhost:3000/actions/"+resultJSON[0]["_id"], {method: 'put',    headers: {
-                        'Accept': 'application/json',
-    'Content-Type': 'application/json'
-                      },body: JSON.stringify(elem)})
-                } else {
-                    fetch("http://localhost:3000/actions/new", {method: 'post',    headers: {
-                        'Accept': 'application/json',
-    'Content-Type': 'application/json'
-                      },body: JSON.stringify(elem)})
+                if(resultJSON.length===0){
+                    fetch("http://localhost:3000/actions/new", 
+                    {
+                        method: 'post',    
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(elem)})
                 }
-                console.log("Sukces");
             });
-        })
-        
+        });
+        this.fetchData();
     }
     fileLoaded = (name, file)=>{
-        console.log("file loaded");
         const processor = name.indexOf('Historia')>-1 ? processMillenium : processIng;
-        const processedData = processor(file);
+        const processedData = processor(file, this.state.categoriesConfig);
         this.update(processedData);
     }
     render(){

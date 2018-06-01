@@ -8,14 +8,14 @@ export class ActionBar extends React.Component {
             if(!this.files.hasOwnProperty(key)){
                 return;
             }
-            this.fileName += this.fileName ? ' , ': '';
-            this.fileName += this.files[key].name;
+            this.fileName = this.files[key].name;
 
             var fileReader = new FileReader();
-            fileReader.readAsText( this.files[key], 'windows-1250');
+           
             fileReader.onload = (e) => {
                 this.props.fileLoaded(this.fileName, e.target.result);
             }
+            fileReader.readAsText( this.files[key], 'windows-1250');
         };
     }
     render(){
