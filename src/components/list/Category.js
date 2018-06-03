@@ -18,7 +18,7 @@ export class Category extends React.Component {
                     <div className="list-actions">Actions</div>
                 </div>
                 {this.props.data.map((t, index)=>{
-                    return <Transaction transaction={t} key={`trans_${index}`}/>
+                    return <Transaction categories={this.props.categories} transaction={t} key={`trans_${index}`}/>
                 })}
             </div>
         );

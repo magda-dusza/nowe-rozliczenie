@@ -13,7 +13,7 @@ export class Transaction extends React.Component {
     render(){
         return (
             <div>
-                <Row toggleRaw={this.toggleRaw} transaction={this.props.transaction}/>
+                <Row categories={this.props.categories} toggleRaw={this.toggleRaw} transaction={this.props.transaction}/>
                 <RawRow raw={this.props.transaction.raw} isVisible={this.state.isRawVisible}/>
             </div>
         );

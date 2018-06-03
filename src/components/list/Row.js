@@ -3,7 +3,12 @@ import React, { Fragment } from 'react';
 export class Row extends React.Component {
     state = {
         isEdit : false,
-        model: this.props.transaction
+        model: this.props.transaction,
+        simpleCategories: [],
+    }
+
+    componentDidMount() {
+        this.setState({simpleCategories: this.props.categories.map(elem=>elem.label)})
     }
 
     updateDate(event) {
@@ -29,7 +34,7 @@ export class Row extends React.Component {
             body: JSON.stringify(this.state.model)
         });
     }
-    handleChange(event) {
+    handleChange = (event) => {
         this.setState({model : {...this.state.model , userCategory: event.target.value}});
     }
     getDateCell() {
@@ -43,7 +48,12 @@ export class Row extends React.Component {
 
     onClickChangeCell(value){
        return this.state.isEdit ?
-        <div><input value={value} onChange={this.handleChange.bind(this)}/> <button  onClick={this.toggleCell.bind(this)}>OK</button> </div>
+        <div>
+            <select value={value} onChange={this.handleChange}>
+                {this.state.simpleCategories.map(category=><option value={category}>{category}</option>)}
+            </select> 
+            <button  onClick={this.toggleCell.bind(this)}>OK</button> 
+        </div>
         : <div onClick={this.toggleCell.bind(this)}> {value} </div>
     }
 

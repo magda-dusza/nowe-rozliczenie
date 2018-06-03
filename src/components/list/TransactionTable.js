@@ -10,7 +10,7 @@ export class TransactionTable extends React.Component {
         return (
             <div>
                 {categoriesIds.map((key, index)=>(
-                    <Category index={key} data={this.props.categories[key]} key={`cat_${key}`}/>
+                    <Category index={key} data={this.props.categories[key]} key={`cat_${key}`} categories={this.props.catConfig}/>
                 ))}
             </div>
         );

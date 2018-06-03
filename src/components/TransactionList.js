@@ -8,7 +8,8 @@ export class TransactionList extends React.Component {
     state = {
         transactions: [],
         categories: {},
-        categoriesConfig: []
+        categoriesConfig: [],
+
     }
     componentDidMount(){
        this.fetchData();
@@ -87,7 +88,9 @@ export class TransactionList extends React.Component {
         return (
             <div>
                 <ActionBar fileLoaded={this.fileLoaded} updateLists={this.updateLists}/>
-                <TransactionTable transactions={this.state.transactions} categories={this.state.categories}/>
+                <TransactionTable transactions={this.state.transactions} 
+                                  categories={this.state.categories} 
+                                  catConfig={this.state.categoriesConfig}/>
             </div>
         );
     }
