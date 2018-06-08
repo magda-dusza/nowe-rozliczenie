@@ -1,10 +1,14 @@
 import React, { Fragment } from 'react';
+import {Popup} from "../../commons/Popup/Popup"
 
 export class Row extends React.Component {
     state = {
         isEdit : false,
         model: this.props.transaction,
         simpleCategories: [],
+        popupSimpleCategories: [],
+        showPopup : false,
+        pickedCategory : [2,3]
     }
 
     componentDidMount() {
@@ -57,15 +61,30 @@ export class Row extends React.Component {
         : <div onClick={this.toggleCell.bind(this)}> {value} </div>
     }
 
+    toggleCategoryDialog = () => {
+        this.setState({showPopup:!this.state.showPopup});
+    }
+
+    
     render(){
         return (
-            <div className="list-headers table-row">
+             <div className="list-headers table-row">
                 <div className="list-bank">{this.state.model.bank}</div>
                 {this.getDateCell()}
                 <div className="list-amount">{this.state.model.amount}</div>
                 <div className="list-description">{this.state.model.description}</div>
                 <div className="list-category">{this.onClickChangeCell(this.state.model.userCategory)}</div>
-                <div className="list-actions"><button onClick={this.props.toggleRaw}>Szczegóły</button></div>
+                <div className="list-actions">
+                    <button onClick={this.props.toggleRaw}>Szczegóły</button>
+                    <button onClick={this.toggleCategoryDialog}>Kategorie</button>
+
+                </div>
+                {this.state.showPopup ?
+                <Popup categories={this.props.categories}
+                       model = {this.state.model}
+                       closePopup = {this.toggleCategoryDialog}/>
+                : null
+                } 
             </div>
         );
     }
