@@ -10,6 +10,7 @@
     background-color: rgba(0,0,0, 0.5);
   }
   .popup_inner {
+    min-height: 400px;
     position: absolute;
     left: 25%;
     right: 25%;
@@ -17,4 +18,9 @@
     bottom: 25%;
     margin: auto;
     background: white;
+  }
+
+  .popup_inner--list {
+    height: 200px;
+    overflow-y: auto;
   }

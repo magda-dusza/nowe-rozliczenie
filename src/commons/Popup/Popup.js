@@ -1,14 +1,13 @@
 import React from "react";
 import "./Popup.css";
 
-
-
 export class Popup extends React.Component {
     
     state = {
          selectedCategory : "",
          tagsList : [] ,
-         simpleCategories : []      
+         simpleCategories : [],
+         newTag: "" 
     }
 
     
@@ -43,18 +42,52 @@ export class Popup extends React.Component {
     handleChange(event){
         this.updateCategory(event.target.value)
     }
+
+    handleNewTagChange(event){
+       this.setState({newTag : event.target.value});
+    }
+
+    addNewTag(){
+        const category = this.props.categories.find(elem => elem.label === this.state.selectedCategory);
+        const isValid = this.isTagValid(category);
+        if(!isValid){
+            console.log("element juz istnieje lub pusty");
+            return;
+        }
+        category.keyWords = [this.state.newTag, ...this.state.tagsList];
+        fetch('http://localhost:3000/categories/'+category._id, {
+            method: 'put',    
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(category)});
+        this.setState({tagsList : [this.state.newTag, ...this.state.tagsList]});
+        this.setState({newTag : ""});
+    }
+
+    isTagValid(category) {
+        const isEmpty = this.state.newTag.trim() === "";
+        const isDuplicate = typeof category.keyWords.find(elem => elem === this.state.newTag) !== 'undefined';
+        return !isEmpty && !isDuplicate;
+    }
     
     render() {
-      return (
-        <div className='popup'>
-          <div className='popup_inner'>
-            <h1>{this.popupCategorySelect(this.props.model.category)}</h1>
-            <ul>    
-                {this.state.tagsList.map((tag, index)=><li key={index}> {tag} </li>)}
-            </ul>
-          <button onClick={this.props.closePopup}>close me</button>
-          </div>
-        </div>
+        return (
+            <div className='popup'>
+                <div className='popup_inner'>
+                    <h1>Edycja kategorii</h1>
+                    <div>{this.popupCategorySelect(this.props.model.category)}</div>
+                    <div>
+                        <input value={this.state.newTag} onChange={this.handleNewTagChange.bind(this)}/>
+                        <button onClick={this.addNewTag.bind(this)}>Dodaj</button>
+                    </div>
+                    <ul className="popup_inner--list">    
+                        {this.state.tagsList.map((tag, index)=><li key={index}> {tag} </li>)}
+                    </ul>
+                    <button onClick={this.props.closePopup}>close me</button>
+                </div>
+            </div>
       );
     }
   }
