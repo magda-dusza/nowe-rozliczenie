@@ -1,5 +1,7 @@
 import React from 'react';
 
+import '../styles/ActionBar.css';
+
 export class ActionBar extends React.Component {
     fileChanged = (event)=>{
         this.files = event.target.files;
@@ -20,7 +22,7 @@ export class ActionBar extends React.Component {
     }
     render(){
         return (
-            <div>
+            <div className="action-bar">
                 <input className="btn btn-secondary top-bar" multiple id="file-upload" type="file" onChange={this.fileChanged}/>
                 <button onClick={this.props.updateLists}>Aktualizuj</button>
                 <button>Export</button>
