@@ -8,9 +8,10 @@
     bottom: 0;
     margin: auto;
     background-color: rgba(0,0,0, 0.5);
+    font-family: Arial, Helvetica, sans-serif
   }
   .popup_inner {
-    min-height: 400px;
+    min-height: 550px;
     position: absolute;
     left: 25%;
     right: 25%;
@@ -18,9 +19,70 @@
     bottom: 25%;
     margin: auto;
     background: white;
+    padding: 1rem 2rem;
+    box-shadow: 0 0 50px 10px rgba(0,0,0,0.3);
+  }
+
+  .popup_inner--title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .popup_inner--selector {
+    line-height: 1.5;
+    padding: 0.5rem 0;
+  }
+  .label{
+    margin: 0.5rem 1rem 0.5rem 0; 
+    font-weight: bold;
+  }
+
+  .popup_inner--selector select {
+    line-height: 2;
+    height: 2rem;
+    font-size: 1.2rem;
+    padding: 0 0.5rem;
+  }
+
+  .popup_inner--new-tag {
+
+  }
+
+  .popup_inner--new-tag input{
+    line-height: 1.5;
+  }
+
+  .popup_inner--new-tag button{
+    line-height: 1.5;
+    background-color: #009933;
+    color: white;
+    border: 2px solid #006622;
+  }
+
+  .popup_inner--new-tag div{
+    margin: 0.2rem 0;
+    color:gray;
+    font-style: italic;
   }
 
   .popup_inner--list {
-    height: 200px;
+    height: 270px;
     overflow-y: auto;
+    list-style-type: none;
+    padding: 0 50% 0 0;
+  }
+
+  .popup_inner--list li{
+   padding: 0.5rem 1rem;
+   margin: 0.5rem 0;
+   border: 1px solid silver;
+  }
+
+  .popup_inner--close {
+    height: 2.5rem;
+    padding: 0 1.5rem;
+    border:1px solid silver;
+    color:gray;
+    background-color: white; 
   }

@@ -76,16 +76,25 @@ export class Popup extends React.Component {
         return (
             <div className='popup'>
                 <div className='popup_inner'>
-                    <h1>Edycja kategorii</h1>
-                    <div>{this.popupCategorySelect(this.props.model.category)}</div>
-                    <div>
+                    <h1 className="popup_inner--title">
+                        Edycja kategorii
+                        <button className="popup_inner--close"onClick={this.props.closePopup}>Zamknij</button></h1>
+                    <hr/>
+                    <div className="popup_inner--selector">
+                        <div className="label">Zmień kategorię: </div>
+                        {this.popupCategorySelect(this.props.model.category)}
+                    </div>
+
+                    <div className="label">Lista słów:</div>
+                    <div className="popup_inner--new-tag">
                         <input value={this.state.newTag} onChange={this.handleNewTagChange.bind(this)}/>
-                        <button onClick={this.addNewTag.bind(this)}>Dodaj</button>
+                        <button onClick={this.addNewTag.bind(this)}>+ Dodaj</button>
+                        <div>Wielkość liter nie ma znaczenia</div>
                     </div>
                     <ul className="popup_inner--list">    
                         {this.state.tagsList.map((tag, index)=><li key={index}> {tag} </li>)}
                     </ul>
-                    <button onClick={this.props.closePopup}>close me</button>
+                    
                 </div>
             </div>
       );
