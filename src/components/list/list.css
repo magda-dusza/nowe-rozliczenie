@@ -1,10 +1,21 @@
 .list-headers{
     display:flex;
-    padding:0.5rem 0.5rem;
+    border: 1px solid #E6E6E6;
+    font-weight: bold;
+}
+
+.list-headers>div {
+    padding: 0.5rem;
+    border-right: 1px solid #E6E6E6;
+    
+}
+
+.list-lp {
+    width:3%;
 }
 
 .list-bank {
-    width:10%;
+    width:7%;
 }
 
 .list-date {
@@ -20,16 +31,20 @@
 }
 
 .list-category {
-    width:20%;
+    width:10%;
 }
 
 .list-actions {
-    width:20%;
+    width:30%;
 }
 
 .table-row {
-    
-    border: 1px solid silver;
+    font-weight: normal;
+    border: none;
+    border-bottom: 1px solid #E6E6E6;
+}
+.table-rows:nth-child(odd){
+    background-color: #f9f9f9;
 }
 
 

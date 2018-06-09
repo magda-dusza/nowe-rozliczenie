@@ -1,6 +1,6 @@
 import React from 'react';
 
-import '../styles/ActionBar.css';
+import './styles/ActionBar.css';
 
 export class ActionBar extends React.Component {
     fileChanged = (event)=>{

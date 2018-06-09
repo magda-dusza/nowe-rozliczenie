@@ -69,6 +69,7 @@ export class Row extends React.Component {
     render(){
         return (
              <div className="list-headers table-row">
+                <div className="list-lp">1</div>
                 <div className="list-bank">{this.state.model.bank}</div>
                 {this.getDateCell()}
                 <div className="list-amount">{this.state.model.amount}</div>
