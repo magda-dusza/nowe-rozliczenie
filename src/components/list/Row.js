@@ -65,12 +65,21 @@ export class Row extends React.Component {
         this.setState({showPopup:!this.state.showPopup});
     }
 
-    
+    getBankColor(bank){
+        const banksMap = {
+            "Millenium": "#c82059",
+            "ING": "#ff6200"
+        }
+        return {color: banksMap[bank], fontWeight: "bold"};
+    }
+
     render(){
         return (
              <div className="list-headers table-row">
                 <div className="list-lp">1</div>
-                <div className="list-bank">{this.state.model.bank}</div>
+                <div className="list-bank" style={this.getBankColor(this.state.model.bank)}>
+                    {this.state.model.bank}
+                </div>
                 {this.getDateCell()}
                 <div className="list-amount">{this.state.model.amount}</div>
                 <div className="list-description">{this.state.model.description}</div>

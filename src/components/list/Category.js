@@ -2,12 +2,13 @@ import React from 'react';
 import {Transaction} from './Transaction'
 
 import "./list.css";
-
+import "./styles/Category.css";
+    
 export class Category extends React.Component {
     
     render(){
         return (
-            <div class="category-wrapper" style={{paddingTop: '2rem'}}>
+            <div className="category-wrapper">
                 <div style={{fontSize:'2rem', fontWeight:'bold', padding: '1rem 0'}}>{this.props.index}</div>
                 <div className="list-headers">
                     <div className="list-lp">Lp.</div>

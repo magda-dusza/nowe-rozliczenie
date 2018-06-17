@@ -7,7 +7,8 @@ export class Popup extends React.Component {
          selectedCategory : "",
          tagsList : [] ,
          simpleCategories : [],
-         newTag: "" 
+         newTag: "" ,
+         isTagEdit: false
     }
 
     
@@ -71,6 +72,52 @@ export class Popup extends React.Component {
         const isDuplicate = typeof category.keyWords.find(elem => elem === this.state.newTag) !== 'undefined';
         return !isEmpty && !isDuplicate;
     }
+
+    getTag(tag, index) {
+        return this.state.isTagEdit === index ?
+        <span>
+            <input value={tag} onChange={this.handleEdit.bind(this, index)}/>
+            <button onClick={this.updateTag.bind(this)}>OK</button>
+        </span>
+        :<span onClick={()=>{this.setState({isTagEdit : index})}}>{tag}</span>;
+    }
+
+    handleEdit(index, event) {
+        console.log (index)
+        console.log ('a',...this.state.tagsList.slice(0, index))
+        console.log ('b',...this.state.tagsList.slice(index+1))
+        this.setState({tagsList: [...this.state.tagsList.slice(0, index),event.target.value,...this.state.tagsList.slice(index+1)]})
+        console.log (this.state.tagsList)
+    }
+
+    updateTag() {
+        this.setState({isTagEdit : false}); 
+
+        let foundCategory=this.props.categories.find(category=>category.label===this.state.selectedCategory);
+        foundCategory.keyWords = this.state.tagsList;
+        fetch('http://localhost:3000/categories/'+foundCategory._id, {
+            method: 'put',    
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(foundCategory)}
+        );
+    }
+
+    deleteTag(tagIndex){
+        let foundCategory=this.props.categories.find(category=>category.label===this.state.selectedCategory);
+        foundCategory.keyWords.splice(tagIndex,1);
+        fetch('http://localhost:3000/categories/'+foundCategory._id, {
+            method: 'put',    
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(foundCategory)}
+        );
+        this.setState({tagsList:foundCategory.keyWords})
+    }
     
     render() {
         return (
@@ -92,7 +139,12 @@ export class Popup extends React.Component {
                         <div>Wielkość liter nie ma znaczenia</div>
                     </div>
                     <ul className="popup_inner--list">    
-                        {this.state.tagsList.map((tag, index)=><li key={index}> {tag} </li>)}
+                        {this.state.tagsList.map((tag, index)=>(
+                            <li key={index}>
+                                {this.getTag(tag, index)}
+                                <button onClick={this.deleteTag.bind(this, index)}>Usuń</button> 
+                            </li>
+                        )) }
                     </ul>
                     
                 </div>

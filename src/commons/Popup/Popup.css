@@ -77,6 +77,8 @@
    padding: 0.5rem 1rem;
    margin: 0.5rem 0;
    border: 1px solid silver;
+   display: flex;
+   justify-content: space-between
   }
 
   .popup_inner--close {

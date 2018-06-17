@@ -7,7 +7,7 @@ export class Navigation extends React.Component {
         return(
             <div className="main-menu">
                 <a className="navbar-brand" href="#">
-                    <img src="/src/assets/icons/chart.png" width="30" height="30" class="brand" alt="chart"/>
+                    <img src="/src/assets/icons/chart.png" width="30" height="30" className="brand" alt="chart"/>
                     Rozliczenie 
                 </a>
                 <div className="nav">
