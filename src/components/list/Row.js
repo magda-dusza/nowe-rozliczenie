@@ -1,9 +1,11 @@
 import React, { Fragment } from 'react';
 import {Popup} from "../../commons/Popup/Popup"
+import Calendar from 'react-input-calendar'
+
 
 export class Row extends React.Component {
     state = {
-        isEdit : false,
+        isEdit : "",
         model: this.props.transaction,
         simpleCategories: [],
         popupSimpleCategories: [],
@@ -19,11 +21,11 @@ export class Row extends React.Component {
         console.log('update');
     }
 
-    toggleCell() {
-        if (this.state.isEdit){
+    toggleCell(field) {
+        if (field ===""){
             this.saveRecord();
         }
-        this.setState({isEdit : !this.state.isEdit});
+        this.setState({isEdit : field});
     
     }    
     saveRecord(){
@@ -41,24 +43,39 @@ export class Row extends React.Component {
     handleChange = (event) => {
         this.setState({model : {...this.state.model , userCategory: event.target.value}});
     }
+    handleChangeDate = (event) => {
+        // const isDate = this.toDate(event.target.value);
+        // const inputValue = isDate.toString() === 'Invalid Date' ?  event.target.value: isDate;
+        this.setState({model : {...this.state.model , userDate: event.target.value}});
+    }
     getDateCell() {
-        let dateFormatted = new Date(this.state.model.date).toLocaleDateString();
-        return this.state.editDate ? 
-            <Fragment> <input onChange={this.handleChange.bind(this)} value={dateFormatted}/><button  onClick={this.toggleCell.bind(this)}>OK</button> </Fragment>
-           : <div className="list-date" onClick={this.toggleCell.bind(this)}> 
-                {dateFormatted}
+        return this.state.isEdit === "date"? 
+            <Fragment> 
+                <Calendar onChange={this.handleChangeDate.bind(this)}
+                          format='DD-MM-YYYY' 
+                          date={this.toDate(this.state.model.userDate)} />
+                {/* <input onChange={this.handleChangeDate.bind(this)}  */}
+                       {/* value={this.toDate(this.state.model.userDate)}/> */}
+                <button  onClick={this.toggleCell.bind(this , "")}>OK</button> 
+            </Fragment>
+           : <div className="list-date" onClick={this.toggleCell.bind(this , "date")}> 
+                {this.toDate(this.state.model.userDate)}
              </div>; 
     }
 
-    onClickChangeCell(value){
-       return this.state.isEdit ?
+    toDate(date) {
+        return new Date(date).toLocaleDateString();
+    }
+
+    onClickChangeCell(value, field){
+       return this.state.isEdit === "category"?
         <div>
             <select value={value} onChange={this.handleChange}>
                 {this.state.simpleCategories.map(category=><option value={category}>{category}</option>)}
             </select> 
-            <button  onClick={this.toggleCell.bind(this)}>OK</button> 
+            <button  onClick={this.toggleCell.bind(this , "")}>OK</button> 
         </div>
-        : <div onClick={this.toggleCell.bind(this)}> {value} </div>
+        : <div onClick={this.toggleCell.bind(this , field)}> {value} </div>
     }
 
     toggleCategoryDialog = () => {
@@ -83,11 +100,12 @@ export class Row extends React.Component {
                 {this.getDateCell()}
                 <div className="list-amount">{this.state.model.amount}</div>
                 <div className="list-description">{this.state.model.description}</div>
-                <div className="list-category">{this.onClickChangeCell(this.state.model.userCategory)}</div>
+                <div className="list-category">
+                    {this.onClickChangeCell(this.state.model.userCategory, "category")}
+                </div>
                 <div className="list-actions">
                     <button onClick={this.props.toggleRaw}>Szczegóły</button>
                     <button onClick={this.toggleCategoryDialog}>Kategorie</button>
-
                 </div>
                 {this.state.showPopup ?
                 <Popup categories={this.props.categories}

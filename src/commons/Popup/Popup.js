@@ -83,11 +83,7 @@ export class Popup extends React.Component {
     }
 
     handleEdit(index, event) {
-        console.log (index)
-        console.log ('a',...this.state.tagsList.slice(0, index))
-        console.log ('b',...this.state.tagsList.slice(index+1))
-        this.setState({tagsList: [...this.state.tagsList.slice(0, index),event.target.value,...this.state.tagsList.slice(index+1)]})
-        console.log (this.state.tagsList)
+        this.setState({tagsList: [...this.state.tagsList.slice(0, index),event.target.value,...this.state.tagsList.slice(index+1)]});
     }
 
     updateTag() {

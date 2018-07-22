@@ -5,7 +5,14 @@ import "./list.css";
 import "./styles/Category.css";
     
 export class Category extends React.Component {
-    
+ 
+    state={
+        data: this.props.data,
+    }
+    addNewRow=()=>{
+        this.setState({data: [...this.state.data,{new: true, bank:"millenium", description:"TESTOWY NOWY", category:"Restauracja"} ]})
+    }    
+
     render(){
         return (
             <div className="category-wrapper">
@@ -19,9 +26,10 @@ export class Category extends React.Component {
                     <div className="list-category">Kategoria</div>
                     <div className="list-actions">Akcje</div>
                 </div>
-                {this.props.data.map((t, index)=>{
+                {this.state.data.map((t, index)=>{
                     return <Transaction categories={this.props.categories} transaction={t} key={`trans_${index}`}/>
                 })}
+                <button onClick={this.addNewRow} > Dodaj </button>
             </div>
         );
     }
