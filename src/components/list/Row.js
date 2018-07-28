@@ -1,20 +1,26 @@
 import React, { Fragment } from 'react';
 import {Popup} from "../../commons/Popup/Popup"
-import Calendar from 'react-input-calendar'
+import CalendarInput from "../../commons/Kalendarz/CalendarInput"
 
 
 export class Row extends React.Component {
-    state = {
-        isEdit : "",
-        model: this.props.transaction,
-        simpleCategories: [],
-        popupSimpleCategories: [],
-        showPopup : false,
-        pickedCategory : [2,3]
+    constructor(props){
+        super(props);
+        this.state ={
+            chosenDate: null,
+            isEdit : "",
+            model: {},
+            simpleCategories: [],
+            popupSimpleCategories: [],
+            showPopup : false,
+            pickedCategory : [2,3]
+        }
+        this.getChosenDate=this.getChosenDate.bind(this);
     }
-
+   
     componentDidMount() {
-        this.setState({simpleCategories: this.props.categories.map(elem=>elem.label)})
+        this.setState({simpleCategories: this.props.categories.map(elem=>elem.label)});
+        this.setState({model: this.props.transaction})
     }
 
     updateDate(event) {
@@ -29,7 +35,6 @@ export class Row extends React.Component {
     
     }    
     saveRecord(){
-
         fetch('http://localhost:3000/actions/'+this.state.model._id, {
             method: 'PUT',
             headers: {
@@ -43,29 +48,35 @@ export class Row extends React.Component {
     handleChange = (event) => {
         this.setState({model : {...this.state.model , userCategory: event.target.value}});
     }
+    
+
+    //DATA OPERATIONS
+    getDateCell() {
+        return this.state.isEdit === "date"? 
+            <div className="list-date">
+                <CalendarInput date={this.state.model.userDate} getChosenDate={this.getChosenDate}/>
+                <button onClick={this.toggleCell.bind(this,"")}>OK</button>
+            </div>
+           : <div className="list-date" onClick={this.toggleCell.bind(this,"date")}> 
+                {this.state.model.userDate}
+             </div>; 
+    }
+
+    getChosenDate(value){
+        console.log(value);
+        this.setState({model: {...this.state.model, userDate: value}});
+      }
+
+    toDate(date) {
+        return new Date(date).toLocaleDateString();
+    }
+
     handleChangeDate = (event) => {
         // const isDate = this.toDate(event.target.value);
         // const inputValue = isDate.toString() === 'Invalid Date' ?  event.target.value: isDate;
         this.setState({model : {...this.state.model , userDate: event.target.value}});
     }
-    getDateCell() {
-        return this.state.isEdit === "date"? 
-            <Fragment> 
-                <Calendar onChange={this.handleChangeDate.bind(this)}
-                          format='DD-MM-YYYY' 
-                          date={this.toDate(this.state.model.userDate)} />
-                {/* <input onChange={this.handleChangeDate.bind(this)}  */}
-                       {/* value={this.toDate(this.state.model.userDate)}/> */}
-                <button  onClick={this.toggleCell.bind(this , "")}>OK</button> 
-            </Fragment>
-           : <div className="list-date" onClick={this.toggleCell.bind(this , "date")}> 
-                {this.toDate(this.state.model.userDate)}
-             </div>; 
-    }
 
-    toDate(date) {
-        return new Date(date).toLocaleDateString();
-    }
 
     onClickChangeCell(value, field){
        return this.state.isEdit === "category"?

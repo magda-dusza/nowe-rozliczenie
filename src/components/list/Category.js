@@ -8,10 +8,14 @@ export class Category extends React.Component {
  
     state={
         data: this.props.data,
+        flag: false,
     }
     addNewRow=()=>{
-        this.setState({data: [...this.state.data,{new: true, bank:"millenium", description:"TESTOWY NOWY", category:"Restauracja"} ]})
+        this.setState ({flag: !this.state.flag})
+        //this.setState({data: [...this.state.data,{new: true, bank:"millenium", description:"TESTOWY NOWY", category:"Restauracja"} ]})
     }    
+
+    
 
     render(){
         return (
