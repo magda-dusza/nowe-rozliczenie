@@ -11,9 +11,10 @@ export class Navigation extends React.Component {
                     Rozliczenie 
                 </a>
                 <div className="nav">
-                    <a className="nav-link active">Transakcje</a>
+                    <NavLink to="/">Transakcje</NavLink>
                     <a className="nav-link">Ustawienia</a>
                     <a className="nav-link">Statystyki</a>
+                    <NavLink to="/bills">Rachunki</NavLink>
                 </div>
             </div>
         );

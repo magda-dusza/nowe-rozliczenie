@@ -1,0 +1,17 @@
+.bills-table{
+    text-align:center;
+    color: rgb(15, 55, 73);
+    font-size: 14px;
+    border: 2px solid rgb(15, 55, 73);
+    border-collapse: collapse;
+    margin-top: 5px;
+    background-color: white;
+  }
+
+  .bills-header{
+    background-color: rgb(90, 189, 235);
+    border: 2px solid rgb(15, 55, 73);
+    padding: 10px;
+    font-weight: bold;
+    height: 25px;
+  }
