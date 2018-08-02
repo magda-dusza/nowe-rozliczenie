@@ -2,7 +2,8 @@ import React from 'react';
 import {ActionBar} from './list/ActionBar';
 import {TransactionTable} from './list/TransactionTable';
 import {processMillenium, processIng} from './helpers/processors';
-
+import {prepareDataToExport} from './helpers/export';
+import {saveAs} from 'file-saver';
 
 export class TransactionList extends React.Component {
     state = {
@@ -84,10 +85,18 @@ export class TransactionList extends React.Component {
         this.setState({categories : {}});
         this.fetchData();
     }
+    exportList = () => {
+        const csv = prepareDataToExport(this.state.transactions);
+        const blob = new Blob([csv], {type: "text/plain;charset=utf-8"});
+        saveAs(blob, 'rozliczenie.csv');
+    }
     render(){
         return (
             <div>
-                <ActionBar fileLoaded={this.fileLoaded} updateLists={this.updateLists}/>
+                <ActionBar 
+                    fileLoaded={this.fileLoaded} 
+                    updateLists={this.updateLists} 
+                    exportList={this.exportList}/>
                 <TransactionTable transactions={this.state.transactions} 
                                   categories={this.state.categories} 
                                   catConfig={this.state.categoriesConfig}/>
